@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.util.Date;
 
+
 @Data
 public class Product {
     private Integer productId;
@@ -15,6 +16,6 @@ public class Product {
     private Integer price;
     private Integer stock;
     private String description;
-    private  Date createDate;
+    private Date createDate;
     private Date lastModifiedDate;
 }
