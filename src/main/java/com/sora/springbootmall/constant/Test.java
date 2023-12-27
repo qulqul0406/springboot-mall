@@ -9,6 +9,8 @@ public class Test {
         String s2 = "CAR";
         ProductCategory category2 = ProductCategory.valueOf(s2);
         System.out.println(category2); //找到enum類型是否有這個分類
+
+        System.out.println(System.currentTimeMillis());
     }
 
 }
