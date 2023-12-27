@@ -11,4 +11,6 @@ public class ProductQueryParams {
     String search;
     String orderBy;
     String sort;
+    Integer limit;
+    Integer offset;
 }

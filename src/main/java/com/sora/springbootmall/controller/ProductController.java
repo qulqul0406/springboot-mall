@@ -6,6 +6,8 @@ import com.sora.springbootmall.dto.ProductRequest;
 import com.sora.springbootmall.model.Product;
 import com.sora.springbootmall.service.ProductService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Valid
 @RestController
 public class ProductController {
 
@@ -27,13 +30,19 @@ public class ProductController {
 
             // 排序 Sorting //先給預設值，Dao實作就不用寫判斷他們是否為空
             @RequestParam(defaultValue = "created_date") String orderBy,
-            @RequestParam(defaultValue = "desc") String sort //desc 降序、asc 升序
+            @RequestParam(defaultValue = "desc") String sort, //desc 降序、asc 升序
+
+            //分頁 Pagination
+            @RequestParam(defaultValue = "5") @Max(1000) @Min(0) Integer limit,
+            @RequestParam(defaultValue = "0") @Min(0) Integer offset
     ){
         ProductQueryParams productQueryParams = new ProductQueryParams();
         productQueryParams.setCategory(category);
         productQueryParams.setSearch(search);
         productQueryParams.setOrderBy(orderBy);
         productQueryParams.setSort(sort);
+        productQueryParams.setLimit(limit);
+        productQueryParams.setOffset(offset);
 
         List<Product> productList = productService.getProducts(productQueryParams);
 
