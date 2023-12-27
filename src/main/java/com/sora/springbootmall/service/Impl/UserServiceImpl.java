@@ -1,6 +1,7 @@
 package com.sora.springbootmall.service.Impl;
 
 import com.sora.springbootmall.dao.UserDao;
+import com.sora.springbootmall.dto.UserLoginRequest;
 import com.sora.springbootmall.dto.UserRegisterRequest;
 import com.sora.springbootmall.model.User;
 import com.sora.springbootmall.service.UserService;
@@ -33,5 +34,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Integer userId) {
         return userDao.getUserById(userId);
+    }
+
+    @Override
+    public User login(UserLoginRequest userLoginRequest) {
+        User user = userDao.getUserByEmail(userLoginRequest.getEmail());
+
+        if (user == null){
+            log.warn("該 email {} 尚未被註冊", userLoginRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        if(user.getPassword().equals(userLoginRequest.getPassword())){
+            return user;
+        }else{
+            log.warn("email {} 的密碼不正確", userLoginRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
     }
 }
