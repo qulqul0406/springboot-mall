@@ -2,10 +2,10 @@ package com.sora.springbootmall.dao.Impl;
 
 import com.sora.springbootmall.constant.ProductCategory;
 import com.sora.springbootmall.dao.ProductDao;
+import com.sora.springbootmall.dto.ProductQueryParams;
 import com.sora.springbootmall.dto.ProductRequest;
 import com.sora.springbootmall.model.Product;
 import com.sora.springbootmall.rowmapper.ProductRowMapper;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -25,26 +25,24 @@ public class ProductDaoImpl implements ProductDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public List<Product> getProducts(ProductCategory category, String search) {
+    public List<Product> getProducts(ProductQueryParams productQueryParams) {
         String sql ="SELECT product_id, product_name, category, image_url, price, stock, " +
                 "description, created_date, last_modified_date " +
                 "FROM product WHERE 1=1";
 
         Map<String,Object> map = new HashMap<>();
 
-        if (category != null){
+        if (productQueryParams.getCategory() != null){
             sql = sql + " AND category = :category";
-            map.put("category", category.name());
+            map.put("category", productQueryParams.getCategory().name());
         }
 
-        if (search != null){
+        if (productQueryParams.getSearch() != null){
             sql = sql + " AND product_name LIKE :search";
-            map.put("search", "%" + search + "%");
+            map.put("search", "%" + productQueryParams.getSearch() + "%");
         }
 
-        List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
-
-        return productList;
+        return namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
     }
 
     @Override
@@ -90,9 +88,7 @@ public class ProductDaoImpl implements ProductDao {
 
         namedParameterJdbcTemplate.update(sql,new MapSqlParameterSource(map),keyHolder);
 
-        int productId = keyHolder.getKey().intValue();
-
-        return productId;
+        return keyHolder.getKey().intValue();
     }
 
     @Override

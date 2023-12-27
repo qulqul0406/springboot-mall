@@ -1,17 +1,14 @@
 package com.sora.springbootmall.service;
 
-import com.sora.springbootmall.constant.ProductCategory;
+import com.sora.springbootmall.dto.ProductQueryParams;
 import com.sora.springbootmall.dto.ProductRequest;
 import com.sora.springbootmall.model.Product;
-import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
 public interface ProductService {
 
-    List<Product> getProducts(ProductCategory category,String search);
+    List<Product> getProducts(ProductQueryParams productQueryParams);
 
     Product getProductById(Integer productId);
 
