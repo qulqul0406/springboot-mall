@@ -1,5 +1,6 @@
 package com.sora.springbootmall.controller;
 
+import com.sora.springbootmall.constant.ProductCategory;
 import com.sora.springbootmall.dto.ProductRequest;
 import com.sora.springbootmall.model.Product;
 import com.sora.springbootmall.service.ProductService;
@@ -18,10 +19,13 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/products")//查詢商品列表
-    public ResponseEntity<List<Product>> getProducts(){
-        List<Product> list = productService.getProducts();
+    public ResponseEntity<List<Product>> getProducts(
+            @RequestParam(required = false) ProductCategory category,
+            @RequestParam(required = false) String search
+    ){
+        List<Product> productList = productService.getProducts(category,search);
 
-        return ResponseEntity.status(HttpStatus.OK).body(list);
+        return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
 
     @GetMapping("/products/{productId}")//查詢商品

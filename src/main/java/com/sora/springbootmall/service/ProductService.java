@@ -1,5 +1,6 @@
 package com.sora.springbootmall.service;
 
+import com.sora.springbootmall.constant.ProductCategory;
 import com.sora.springbootmall.dto.ProductRequest;
 import com.sora.springbootmall.model.Product;
 import jakarta.validation.Valid;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    List<Product> getProducts();
+    List<Product> getProducts(ProductCategory category,String search);
 
     Product getProductById(Integer productId);
 
