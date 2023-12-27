@@ -1,9 +1,8 @@
 package com.sora.springbootmall.dto;
 
 import com.sora.springbootmall.constant.ProductCategory;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.Data;
-import lombok.NonNull;
 
 @Data
 public class ProductRequest {
