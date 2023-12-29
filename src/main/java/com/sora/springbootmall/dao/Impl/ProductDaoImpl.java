@@ -7,7 +7,6 @@ import com.sora.springbootmall.dto.ProductRequest;
 import com.sora.springbootmall.model.Product;
 import com.sora.springbootmall.rowmapper.ProductRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -68,16 +67,16 @@ public class ProductDaoImpl implements ProductDao {
                 "description, created_date, last_modified_date " +
                 "FROM product WHERE product_id = :productId";
 
+        Map<String,Object> map = new HashMap<>();
+        map.put("productId", productId);
 
-        try {
-            Map<String,Object> map = new HashMap<>();
-            map.put("productId", productId);
+        List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
 
-            Product product = namedParameterJdbcTemplate.queryForObject(sql, map, new ProductRowMapper());
-
-            return product;
-        }catch (EmptyResultDataAccessException ex){
-            return  null;
+        if(!productList.isEmpty()){
+            return productList.get(0);
+        }
+        else {
+            return null;
         }
 
     }
