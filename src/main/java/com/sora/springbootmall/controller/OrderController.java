@@ -23,6 +23,6 @@ public class OrderController {
 
         Integer orderId = orderService.createOrder(userId,createOrderRequest);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(createOrderRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userId);
     }
 }
