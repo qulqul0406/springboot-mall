@@ -1,0 +1,12 @@
+package com.sora.springbootmall.model;
+
+import lombok.Data;
+
+@Data
+public class OrderItem {
+    private Integer oderItemId;
+    private Integer orderId;
+    private Integer productId;
+    private Integer quantity;
+    private Integer amount;
+}
