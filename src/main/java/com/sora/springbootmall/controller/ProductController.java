@@ -70,7 +70,7 @@ public class ProductController {
         if (product != null){
             return ResponseEntity.status(HttpStatus.OK).body(product);
         }else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
     }
 

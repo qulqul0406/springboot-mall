@@ -8,10 +8,12 @@ import com.sora.springbootmall.model.Product;
 import com.sora.springbootmall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Component
+@Transactional
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
